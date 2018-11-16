@@ -32,7 +32,7 @@ android {
     productFlavors{
         Cramer{
             dimension "default"
-            applicationId "com.example.glb_gz.multipackageapp.beta"
+            applicationId "com.example.glb_gz.multipackageapp.cramer"
             //在 AndroidManifest.xml 中使用,如:
             //      android:icon="${icon}"
             //      android:label="${new_app_name}"
@@ -42,7 +42,7 @@ android {
         }
         GreenGuide{
             dimension "default"
-            applicationId "com.example.glb_gz.multipackageapp.release"
+            applicationId "com.example.glb_gz.multipackageapp.guide"
             manifestPlaceholders = [new_app_name:"Guide",icon:"@mipmap/ic_launcher_guide"]
             resValue("string","strKey","releaseStrValue")
         }
