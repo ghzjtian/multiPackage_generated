@@ -1,6 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
+    //签名信息
+    signingConfigs {
+        release {
+            keyAlias 'key0'
+            keyPassword 'multi1230'
+            storeFile file('/Users/glb_gz/Documents/AS_Workplace/MultiPackageAPP/debug')
+            storePassword 'multi1230'
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.glb_gz.multipackageapp"
@@ -13,13 +22,37 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    flavorDimensions "default"
+    //配置不同包名的 APK
+    productFlavors{
+        Cramer{
+            dimension "default"
+            applicationId "com.example.glb_gz.multipackageapp.beta"
+            //在 AndroidManifest.xml 中使用,如:
+            //      android:icon="${icon}"
+            //      android:label="${new_app_name}"
+            manifestPlaceholders = [new_app_name:"Cramer",icon:"@mipmap/ic_launcher_cramer"]
+            //在 java 代码中使用，具体的方式为: context.getResources().getString(R.string.strKey);
+            resValue("string","strKey","betaStrValue")
+        }
+        GreenGuide{
+            dimension "default"
+            applicationId "com.example.glb_gz.multipackageapp.release"
+            manifestPlaceholders = [new_app_name:"Guide",icon:"@mipmap/ic_launcher_guide"]
+            resValue("string","strKey","releaseStrValue")
+        }
+    }
+
+
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
